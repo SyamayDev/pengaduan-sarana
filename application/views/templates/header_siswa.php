@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= isset($title) ? $title : 'Aspirasi Siswa' ?> - Pengaduan Sarana</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background-color: #f8f9fa;
+            padding-bottom: 80px; /* Space for bottom navbar */
+        }
+        .navbar-brand img {
+            max-height: 40px;
+        }
+        .main-content {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        /* Desktop Navigation (Top) */
+        .navbar-desktop {
+            display: none; /* Hidden on mobile */
+        }
+
+        /* Mobile Navigation (Bottom) */
+        .navbar-mobile {
+            display: flex; /* Shown on mobile */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            z-index: 1000;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+            padding: 0.5rem 0;
+            justify-content: space-around;
+        }
+        .navbar-mobile .nav-item {
+            flex: 1;
+            text-align: center;
+        }
+        .navbar-mobile .nav-link {
+            color: #6b7280;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 0.5rem 0;
+            font-size: 0.75rem;
+            text-decoration: none;
+        }
+        .navbar-mobile .nav-link i {
+            font-size: 1.2rem;
+        }
+        .navbar-mobile .nav-link.active {
+            color: #198754; /* Green to match theme */
+            font-weight: 600;
+        }
+
+        /* Responsive Breakpoint */
+        @media (min-width: 768px) {
+            .navbar-desktop {
+                display: flex; /* Show on desktop */
+            }
+            .navbar-mobile {
+                display: none; /* Hide on desktop */
+            }
+             body, html {
+                padding-bottom: 0; /* No bottom padding on desktop */
+            }
+        }
+        
+        /* Form & Card Styling to match welcome_guest */
+        .card {
+            border: none;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+        }
+        .btn-success {
+            background-color: #198754;
+            border-color: #198754;
+        }
+        .btn-success:hover {
+            background-color: #157347;
+            border-color: #157347;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Desktop Navigation -->
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm navbar-desktop">
+            <div class="container">
+                <a class="navbar-brand" href="<?= base_url('siswa') ?>">
+                    <img src="<?= base_url('assets/images/logo.webp') ?>" alt="Logo" class="d-inline-block align-text-top me-2">
+                    <span class="fw-bold" >TRIADU</span>
+                </a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link <?= ($this->uri->segment(1) == 'siswa' && empty($this->uri->segment(2))) ? 'active' : '' ?>" href="<?= base_url('siswa') ?>">Semua Aspirasi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= ($this->uri->segment(2) == 'my_aspirasi') ? 'active' : '' ?>" href="<?= base_url('siswa/my_aspirasi') ?>">Aspirasiku</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link <?= ($this->uri->segment(2) == 'tambah') ? 'active' : '' ?>" href="<?= base_url('siswa/tambah') ?>">Buat Aspirasi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('siswa/logout') ?>">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+         <?php if ($this->session->flashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= $this->session->flashdata('success') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?= $this->session->flashdata('error') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+    <!-- Content starts here -->
