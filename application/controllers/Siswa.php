@@ -28,8 +28,18 @@ class Siswa extends CI_Controller
             $this->load->view('siswa/my_aspirasi', $data);
             $this->load->view('templates/footer_siswa');
         } else {
-            // If not logged in, show the guest welcome page with all aspirations
-            $data['aspirasi'] = $this->aspirasi_model->get_all();
+            // If not logged in, show the guest welcome page
+            $search_id = $this->input->get('search_id', TRUE);
+            $data['search_id'] = $search_id; // Pass search term back to view
+
+            if (!empty($search_id)) {
+                // If a search ID is provided, find that specific aspiration
+                $result = $this->aspirasi_model->get_by_id($search_id);
+                $data['aspirasi'] = $result ? [$result] : []; // The view expects an array
+            } else {
+                // Otherwise, show the latest 15 aspirations
+                $data['aspirasi'] = $this->aspirasi_model->get_all(15);
+            }
             $this->load->view('welcome_guest', $data);
         }
     }

@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap4.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -31,12 +34,25 @@
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Admin Actions</span>
-          <div class="dropdown-divider"></div>
-          <a href="<?= base_url('admin/logout') ?>" class="dropdown-item">
-            <i class="fas fa-sign-out-alt mr-2"></i> Logout
-          </a>
-        </div>
+    <span class="dropdown-item dropdown-header">Admin Actions</span>
+    <div class="dropdown-divider"></div>
+
+    <!-- Time & Date -->
+    <div class="dropdown-item text-center">
+        <i class="far fa-clock mr-1"></i>
+        <strong id="admin-jam">00:00:00</strong><br>
+        <small id="admin-tanggal">-- -- ----</small>
+    </div>
+
+    <div class="dropdown-divider"></div>
+
+    <a href="<?= base_url('admin/logout') ?>" class="dropdown-item">
+        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+    </a>
+
+    <div class="dropdown-divider"></div>
+</div>
+
       </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -92,6 +108,12 @@
                 <a href="<?= base_url('admin/siswa') ?>" class="nav-link <?= ($this->uri->segment(2) == 'siswa') ? 'active' : '' ?>">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Kelola Siswa</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= base_url('admin/laporan') ?>" class="nav-link <?= ($this->uri->segment(2) == 'laporan') ? 'active' : '' ?>">
+                    <i class="nav-icon fas fa-print"></i>
+                    <p>Laporan Pengaduan</p>
                 </a>
             </li>
         </ul>

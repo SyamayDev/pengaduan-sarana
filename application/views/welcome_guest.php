@@ -21,7 +21,7 @@
             right: 40px;
             width: 70px;
             height: 70px;
-            background-color: #198754; /* Green */
+            background-color: #198754;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -39,25 +39,35 @@
             color: #fff;
             font-size: 28px;
         }
-        .aspirasi-card {
-            border: none;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        .card-aspirasi {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .aspirasi-card:hover {
+        .card-aspirasi:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
         }
-        .aspirasi-img {
+        .image-container {
             height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f3f4f6;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
-        .status-badge {
-            font-size: 0.8rem;
-            padding: 0.5em 0.8em;
-        }
-        .feedback-card {
-            background-color: #e9f5ff;
-            border-color: #bde0fe;
+        .badge-menunggu { background-color: #f59e0b; color: white; }
+        .badge-proses { background-color: #3b82f6; color: white; }
+        .badge-selesai { background-color: #10b981; color: white; }
+        .feedback-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #e5e7eb;
         }
     </style>
 </head>
@@ -81,57 +91,114 @@
         <div class="container">
             <h2 class="text-center mb-5">Daftar Aspirasi & Pengaduan</h2>
 
-            <div class="row g-4">
-                <?php if (!empty($aspirasi)): ?>
-                    <?php foreach ($aspirasi as $a): ?>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card h-100 shadow-sm aspirasi-card">
-                                <?php if (!empty($a->gambar)): ?>
-                                    <img src="<?= base_url('uploads/aspirasi/' . $a->gambar) ?>" class="card-img-top aspirasi-img" alt="Gambar Aspirasi">
-                                <?php endif; ?>
-                                <div class="card-body d-flex flex-column">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <small class="text-muted"><?= htmlspecialchars($a->nama_kategori ?? 'Tidak ada kategori') ?></small>
-                                        <small class="text-muted"><?= date('d M Y', strtotime($a->tanggal)) ?></small>
-                                    </div>
-                                    <h5 class="card-title"><?= htmlspecialchars($a->lokasi) ?></h5>
-                                    <p class="card-text text-muted_"><?= htmlspecialchars($a->keterangan) ?></p>
-                                    
-                                    <div class="mt-auto">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div>
-                                                <span class="badge status-badge rounded-pill text-white 
-                                                    <?= ($a->status == 'Selesai') ? 'bg-success' : (($a->status == 'Proses') ? 'bg-primary' : 'bg-warning') ?>">
-                                                    <i class="fas fa-circle-notch fa-spin me-1"></i><?= $a->status ?>
-                                                </span>
-                                            </div>
-                                        </div>
 
-                                        <?php if ($a->status == 'Selesai' && !empty($a->feedback)): ?>
-                                            <div class="card feedback-card mt-3">
-                                                <div class="card-body">
-                                                    <p class="card-text mb-1 fw-bold">Feedback:</p>
-                                                    <p class="card-text small"><?= htmlspecialchars($a->feedback) ?></p>
-                                                     <?php if (!empty($a->feedback_gambar)): ?>
-                                                        <a href="<?= base_url('uploads/feedback/' . $a->feedback_gambar) ?>" target="_blank">Lihat gambar feedback</a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
+<?php if (!empty($aspirasi)): ?>
+    <div class="row">
+        <?php foreach ($aspirasi as $a): ?>
+            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="<?= rand(100, 300) ?>">
+                <div class="card card-aspirasi h-100">
+                    <!-- Image Section -->
+                    <?php if ($a->gambar): ?>
+                        <div class="image-container">
+                            <img src="<?= base_url('uploads/aspirasi/' . htmlspecialchars($a->gambar)) ?>"
+                                alt="<?= htmlspecialchars($a->lokasi) ?>"
+                                loading="lazy">
+                        </div>
+                    <?php else: ?>
+                        <div class="image-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-image" style="font-size: 3rem; color: rgba(255,255,255,0.3);"></i>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <!-- Location & Category -->
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0" style="max-width: 70%;">
+                                <i class="fas fa-map-marker-alt text-danger me-1"></i>
+                                <?= htmlspecialchars($a->lokasi) ?>
+                            </h5>
+                            <span class="badge badge-<?=
+                                                        ($a->status == 'Selesai' ? 'selesai' : ($a->status == 'Proses' ? 'proses' : 'menunggu'))
+                                                        ?>">
+                                <?= $a->status ?>
+                            </span>
+                        </div>
+
+                        <!-- Category Badge -->
+                        <p class="mb-2">
+                            <small class="badge bg-light text-dark">
+                                <i class="fas fa-tag me-1"></i> <?= htmlspecialchars($a->nama_kategori ?? 'Umum') ?>
+                            </small>
+                        </p>
+
+                        <!-- Description -->
+                        <p class="card-text text-muted" style="font-size: 0.9rem; min-height: 10px;">
+                            <?= substr(htmlspecialchars($a->keterangan), 0, 100) ?>
+                            <?php if (strlen($a->keterangan) > 100): ?>...<?php endif; ?>
+                        </p>
+
+                        <!-- Meta Info -->
+                        <div class="mb-2 pb-2" style="border-bottom: 1px solid #e5e7eb;">
+                            <small class="text-muted d-block">
+                                <i class="fas fa-user me-1"></i>
+                                <strong><?= htmlspecialchars($a->nis) ?></strong>
+                                (<?= htmlspecialchars($a->kelas) ?>)
+                            </small>
+                            <small class="text-muted d-block">
+                                <i class="fas fa-calendar me-1"></i>
+                                <?= date('d M Y H:i', strtotime($a->tanggal)) ?>
+                            </small>
+                        </div>
+
+                        <!-- Feedback Section -->
+                        <?php if ($a->feedback): ?>
+                            <div class="feedback-section">
+                                <strong class="d-block mb-2">
+                                    <i class="fas fa-reply text-success me-1"></i> Umpan Balik
+                                </strong>
+                                <p class="mb-2" style="font-size: 0.85rem;">
+                                    <?= nl2br(htmlspecialchars(substr($a->feedback, 0, 150))) ?>
+                                    <?php if (strlen($a->feedback) > 150): ?><br><small class="text-primary">...selengkapnya</small><?php endif; ?>
+                                </p>
+                                <?php if ($a->feedback_gambar): ?>
+                                    <img src="<?= base_url('uploads/feedback/' . htmlspecialchars($a->feedback_gambar)) ?>"
+                                        alt="Feedback"
+                                        class="img-fluid rounded mt-2"
+                                        style="max-height: 200px; width: 100%; object-fit: cover;"
+                                        loading="lazy">
+                                <?php endif; ?>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="col-12">
-                        <div class="text-center py-5">
-                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                            <h4 class="text-muted">Belum ada aspirasi yang disampaikan.</h4>
-                        </div>
+                        <?php endif; ?>
                     </div>
-                <?php endif; ?>
+                </div>
             </div>
+        <?php endforeach; ?>
+    </div>
+<?php else: ?>
+    <div class="row">
+        <div class="col-12">
+            <div class="card text-center py-5">
+                <div class="card-body">
+                    <i class="fas fa-inbox" style="font-size: 4rem; color: #d1d5db; margin-bottom: 1rem;"></i>
+                    <h5 class="text-muted">Belum ada aspirasi</h5>
+                    <p class="text-muted mb-3">Jadilah yang pertama memberikan aspirasi!</p>
+                    <?php if ($this->session->userdata('siswa')): ?>
+                        <a href="<?= base_url('siswa/tambah') ?>" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i> Tambah Aspirasi
+                        </a>
+                    <?php else: ?>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-sign-in-alt me-2"></i> Login
+                        </button>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+
         </div>
     </main>
 

@@ -52,5 +52,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'siswa';
 $route['admin'] = 'admin/index';
 $route['siswa'] = 'siswa/index';
+
+$route['admin/laporan'] = 'laporan';
+$route['admin/laporan/generate'] = 'laporan/generate';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
