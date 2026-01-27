@@ -67,6 +67,7 @@ class Admin extends CI_Controller
         $data['aspirasi_selesai'] = $this->aspirasi_model->count_by_status('Selesai');
         $data['aspirasi'] = $this->aspirasi_model->get_all(100);
         $data['title'] = 'Dashboard';
+        $data['page_script'] = 'admin/dashboard_script';
 
         $this->load->view('templates/header_admin', $data);
         $this->load->view('admin/dashboard', $data);
@@ -178,6 +179,7 @@ class Admin extends CI_Controller
 
         $data['kategori'] = $this->kategori_model->get_all();
         $data['title'] = 'Kelola Kategori';
+        $data['page_script'] = 'admin/kategori_script';
 
         $this->load->view('templates/header_admin', $data);
         $this->load->view('admin/kategori', $data);
@@ -264,6 +266,7 @@ class Admin extends CI_Controller
 
         $data['siswa'] = $this->siswa_model->get_all();
         $data['title'] = 'Kelola Siswa';
+        $data['page_script'] = 'admin/siswa_script';
 
         $this->load->view('templates/header_admin', $data);
         $this->load->view('admin/siswa', $data);

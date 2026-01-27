@@ -1,19 +1,19 @@
 <!-- Page content ends here -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+</div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Pengaduan Sarana
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; <?= date('Y') ?> <a href="#">TRIADU</a>.</strong> All rights reserved.
-  </footer>
+<!-- Main Footer -->
+<footer class="main-footer">
+  <!-- To the right -->
+  <div class="float-right d-none d-sm-inline">
+    Pengaduan Sarana
+  </div>
+  <!-- Default to the left -->
+  <strong>Copyright &copy; <?= date('Y') ?> <a href="#">TRIADU</a>.</strong> All rights reserved.
+</footer>
 </div>
 <!-- ./wrapper -->
 
@@ -38,47 +38,54 @@
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
 <?php if (isset($pending_aspirasi_count) && $pending_aspirasi_count > 0): ?>
-<script>
-  $(document).ready(function() {
-    $(document).Toasts('create', {
-      class: 'bg-info',
-      title: 'Notifikasi Aspirasi',
-      subtitle: 'Baru',
-      body: 'Ada <strong><?= $pending_aspirasi_count ?></strong> aspirasi baru yang menunggu untuk diproses. <br/><a href="<?= base_url('admin/aspirasi') ?>" class="text-white"><u>Klik untuk melihat.</u></a>',
-      position: 'bottomRight',
-      autohide: true,
-      delay: 7000, // 7 seconds
-      icon: 'fas fa-envelope fa-lg',
+  <script>
+    $(document).ready(function() {
+      $(document).Toasts('create', {
+        class: 'bg-info',
+        title: 'Notifikasi Aspirasi',
+        subtitle: 'Baru',
+        body: 'Ada <strong><?= $pending_aspirasi_count ?></strong> aspirasi baru yang menunggu untuk diproses. <br/><a href="<?= base_url('admin/aspirasi') ?>" class="text-white"><u>Klik untuk melihat.</u></a>',
+        position: 'bottomRight',
+        autohide: true,
+        delay: 7000, // 7 seconds
+        icon: 'fas fa-envelope fa-lg',
+      });
     });
-  });
-</script>
+  </script>
 <?php endif; ?>
 
 <script>
-function updateAdminTime() {
+  function updateAdminTime() {
     const now = new Date();
 
     const jam = now.toLocaleTimeString('id-ID', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
     });
 
     const tanggal = now.toLocaleDateString('id-ID', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
     });
 
     document.getElementById('admin-jam').innerText = jam;
     document.getElementById('admin-tanggal').innerText = tanggal;
-}
+  }
 
-setInterval(updateAdminTime, 1000);
-updateAdminTime();
+  setInterval(updateAdminTime, 1000);
+  updateAdminTime();
 </script>
+
+<?php
+if (isset($page_script)) {
+  $this->load->view($page_script);
+}
+?>
 
 
 </body>
+
 </html>

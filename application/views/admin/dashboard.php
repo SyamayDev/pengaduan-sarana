@@ -77,7 +77,7 @@
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table id="recentAspirasiTable" class="table table-hover mb-0">
                         <thead class="table-light">
                             <tr>
                                 <th style="width: 5%;">No.</th>
@@ -115,9 +115,14 @@
                                             <small><?= date('d/m/Y H:i', strtotime($a->tanggal)) ?></small>
                                         </td>
                                         <td>
-                                            <a href="<?= base_url('admin/edit_aspirasi/' . $a->id_aspirasi) ?>" class="btn btn-sm btn-primary" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="<?= base_url('admin/edit_aspirasi/' . $a->id_aspirasi) ?>" class="btn btn-warning" title="Proses & Feedback">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="<?= base_url('admin/delete_aspirasi/' . $a->id_aspirasi) ?>" class="btn btn-danger" title="Hapus" onclick="return confirm('Yakin hapus aspirasi ini?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -133,17 +138,18 @@
                     </table>
                 </div>
             </div>
-            <div class="card-footer bg-light">
+            <div class="card-footer">
                 <a href="<?= base_url('admin/aspirasi') ?>" class="btn btn-sm btn-primary">
                     <i class="fas fa-arrow-right me-2"></i> Lihat Semua
-                </a>
-                <a href="<?= base_url('admin/logout') ?>" class="btn btn-sm btn-danger float-end">
-                    <i class="fas fa-sign-out-alt me-2"></i> Logout
                 </a>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Notification Container -->
+<div id="notificationContainer"></div>
+
 
 <style>
     .badge-success {
@@ -173,4 +179,240 @@
     .border-success {
         border-color: #10B981 !important;
     }
+
+    /* ===== NOTIFICATION STYLES ===== */
+    #notificationContainer {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+        max-width: 350px;
+    }
+
+    .notification {
+        background: white;
+        border-left: 4px solid #3B82F6;
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        animation: slideIn 0.4s ease-out;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .notification:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        transform: translateX(-5px);
+    }
+
+    .notification.info {
+        border-left-color: #3B82F6;
+    }
+
+    .notification.success {
+        border-left-color: #10B981;
+    }
+
+    .notification.warning {
+        border-left-color: #F59E0B;
+    }
+
+    .notification.danger {
+        border-left-color: #EF4444;
+    }
+
+    .notification-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+        font-size: 20px;
+        float: left;
+        flex-shrink: 0;
+    }
+
+    .notification.info .notification-icon {
+        background-color: #DDE9F9;
+        color: #3B82F6;
+    }
+
+    .notification.success .notification-icon {
+        background-color: #D2F5E9;
+        color: #10B981;
+    }
+
+    .notification.warning .notification-icon {
+        background-color: #FEF3C7;
+        color: #F59E0B;
+    }
+
+    .notification.danger .notification-icon {
+        background-color: #FEE2E2;
+        color: #EF4444;
+    }
+
+    .notification-content {
+        overflow: hidden;
+    }
+
+    .notification-title {
+        font-weight: bold;
+        color: #1F2937;
+        margin-bottom: 4px;
+        font-size: 14px;
+    }
+
+    .notification-message {
+        color: #6B7280;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .notification-close {
+        float: right;
+        cursor: pointer;
+        color: #9CA3AF;
+        font-size: 20px;
+        line-height: 1;
+        transition: color 0.2s ease;
+        margin-left: 10px;
+    }
+
+    .notification-close:hover {
+        color: #374151;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(400px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        to {
+            opacity: 0;
+            transform: translateX(400px);
+        }
+    }
 </style>
+
+<!-- Dashboard Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('notificationContainer');
+
+        // Main function to show notifications
+        function showNotification(title, message, type = 'info', duration = 5000, onClick = null) {
+            const icons = {
+                info: 'fas fa-info-circle',
+                success: 'fas fa-check-circle',
+                warning: 'fas fa-exclamation-triangle',
+                danger: 'fas fa-times-circle'
+            };
+
+            const notif = document.createElement('div');
+            notif.className = `notification ${type}`;
+            notif.innerHTML = `
+                <div class="notification-icon">
+                    <i class="${icons[type]}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <p class="notification-message">${message}</p>
+                </div>
+                <span class="notification-close">&times;</span>
+            `;
+
+            container.appendChild(notif);
+
+            // Click to execute action or close
+            notif.addEventListener('click', (e) => {
+                if (e.target.className === 'notification-close') {
+                    closeNotification(notif);
+                    return;
+                }
+                if (onClick) {
+                    onClick();
+                } else {
+                    closeNotification(notif);
+                }
+            });
+
+            // Auto-dismiss
+            if (duration) {
+                setTimeout(() => closeNotification(notif), duration);
+            }
+        }
+
+        function closeNotification(notif) {
+            if (!notif) return;
+            notif.style.animation = 'slideOut 0.4s ease-out forwards';
+            setTimeout(() => {
+                if (notif.parentNode === container) {
+                    container.removeChild(notif);
+                }
+            }, 400);
+        }
+
+        // --- Trigger Notifications ---
+
+        // 1. Welcome Notification
+        const hour = new Date().getHours();
+        let greeting = 'Selamat Pagi';
+        if (hour >= 12 && hour < 17) greeting = 'Selamat Siang';
+        else if (hour >= 17) greeting = 'Selamat Malam';
+
+        showNotification(
+            `${greeting}, Admin!`,
+            'Dashboard siap digunakan. Mari kelola aspirasi siswa.',
+            'info',
+            5000
+        );
+
+        // 2. New Aspiration Notification (from flash data)
+        <?php if ($this->session->flashdata('new_aspirasi')): ?>
+            setTimeout(() => {
+                showNotification(
+                    '🚀 1 Pesan Baru',
+                    'Aspirasi baru telah diterima dan menunggu untuk diproses.',
+                    'success',
+                    7000,
+                    () => {
+                        window.location.href = '<?= base_url('admin/aspirasi') ?>';
+                    }
+                );
+            }, 1000); // Delay to not overlap with welcome
+        <?php endif; ?>
+
+        // 3. Pending Aspirations Summary
+        <?php if ($aspirasi_menunggu > 0): ?>
+            setTimeout(() => {
+                showNotification(
+                    '🔔 Ada Aspirasi Menunggu',
+                    'Terdapat <?= $aspirasi_menunggu ?> aspirasi yang perlu diproses.',
+                    'warning',
+                    8000,
+                    () => {
+                        window.location.href = '<?= base_url('admin/aspirasi?status=Menunggu') ?>';
+                    }
+                );
+            }, 2000); // Delay further
+        <?php endif; ?>
+    });
+</script>

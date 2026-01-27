@@ -18,28 +18,26 @@ class Siswa extends CI_Controller
      */
     public function index()
     {
-        // If the student is logged in, show their dashboard
-        if ($this->session->userdata('siswa')) {
-            $nis = $this->session->userdata('siswa')->nis;
-            $data['aspirasi'] = $this->aspirasi_model->get_by_nis($nis);
-            $data['title'] = 'Aspirasi Saya';
+        // Always show all aspirasi regardless of login status
+        $search_id = $this->input->get('search_id', TRUE);
+        $data['search_id'] = $search_id; // Pass search term back to view
 
+        if (!empty($search_id)) {
+            // If a search ID is provided, find that specific aspiration
+            $result = $this->aspirasi_model->get_by_id($search_id);
+            $data['aspirasi'] = $result ? [$result] : []; // The view expects an array
+        } else {
+            // Otherwise, show all aspirations
+            $data['aspirasi'] = $this->aspirasi_model->get_all();
+        }
+
+        // Show different view based on login status
+        if ($this->session->userdata('siswa')) {
+            $data['title'] = 'Semua Aspirasi';
             $this->load->view('templates/header_siswa', $data);
-            $this->load->view('siswa/my_aspirasi', $data);
+            $this->load->view('siswa/dashboard_aspirasi', $data);
             $this->load->view('templates/footer_siswa');
         } else {
-            // If not logged in, show the guest welcome page
-            $search_id = $this->input->get('search_id', TRUE);
-            $data['search_id'] = $search_id; // Pass search term back to view
-
-            if (!empty($search_id)) {
-                // If a search ID is provided, find that specific aspiration
-                $result = $this->aspirasi_model->get_by_id($search_id);
-                $data['aspirasi'] = $result ? [$result] : []; // The view expects an array
-            } else {
-                // Otherwise, show the latest 15 aspirations
-                $data['aspirasi'] = $this->aspirasi_model->get_all(15);
-            }
             $this->load->view('welcome_guest', $data);
         }
     }
@@ -210,6 +208,7 @@ class Siswa extends CI_Controller
         ];
 
         $this->aspirasi_model->insert($data_aspirasi);
+        $this->session->set_flashdata('new_aspirasi', 'true');
         $this->session->set_flashdata('success', 'Aspirasi berhasil dikirim! Terimakasih atas masukan Anda.');
         redirect('siswa/my_aspirasi');
     }

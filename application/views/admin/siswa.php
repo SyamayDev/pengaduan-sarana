@@ -15,7 +15,7 @@
             <div class="card-body p-0">
                 <?php if (!empty($siswa)): ?>
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover mb-0">
+                        <table id="siswaTable" class="table table-striped table-hover mb-0">
                             <thead>
                                 <tr>
                                     <th style="width: 5%;">#</th>

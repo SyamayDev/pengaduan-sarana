@@ -87,6 +87,11 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
             </div>
             <button type="submit" class="btn btn-success w-100">Login</button>
+            <!-- login siswa -->
+            <div class="text-center mt-3">
+                <a href="<?= base_url('siswa/login') ?>" class="text-white">Login sebagai Siswa</a>
+            </div>
+            
         </form>
     </div>
 

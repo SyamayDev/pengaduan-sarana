@@ -16,10 +16,6 @@
         .navbar-brand img {
             max-height: 40px;
         }
-        .main-content {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
 
         /* Desktop Navigation (Top) */
         .navbar-desktop {
@@ -105,10 +101,6 @@
         <!-- Desktop Navigation -->
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm navbar-desktop">
             <div class="container">
-                <a class="navbar-brand" href="<?= base_url('siswa') ?>">
-                    <img src="<?= base_url('assets/images/logo.webp') ?>" alt="Logo" class="d-inline-block align-text-top me-2">
-                    <span class="fw-bold" >TRIADU</span>
-                </a>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -129,7 +121,7 @@
         </nav>
     </header>
 
-    <main class="main-content">
+    <main class="main-content py-2">
         <div class="container">
          <?php if ($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">

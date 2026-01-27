@@ -37,7 +37,7 @@
                     <a href="<?= base_url('admin/laporan') ?>" class="btn btn-secondary">
                         <i class="fas fa-sync-alt"></i> Reset Filter
                     </a>
-                    <a id="cetakBtn" href="#" class="btn btn-success" target="_blank" style="display: none;">
+                    <a id="cetakBtn" href="<?= base_url('admin/laporan/cetak') ?>" class="btn btn-success" target="_blank">
                         <i class="fas fa-print"></i> Cetak Laporan
                     </a>
                 </div>
@@ -66,7 +66,8 @@
                 </thead>
                 <tbody>
                     <?php if (!empty($aspirasi)): ?>
-                        <?php $no = 1; foreach ($aspirasi as $item): ?>
+                        <?php $no = 1;
+                        foreach ($aspirasi as $item): ?>
                             <tr>
                                 <td><?= $no++ ?></td>
                                 <td><?= htmlspecialchars($item->nis) ?></td>
@@ -83,29 +84,3 @@
         </div>
     </div>
 </div>
-
-<script>
-$(document).ready(function() {
-    $('#laporanTable').DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "colvis"] // Tombol print bawaan dihapus
-    }).buttons().container().appendTo('#laporanTable_wrapper .col-md-6:eq(0)');
-
-    // Cek jika laporan sudah digenerate dan ada datanya
-    <?php if (isset($is_generated) && $is_generated && !empty($aspirasi)): ?>
-        // Buat URL untuk tombol cetak
-        const startDate = "<?= isset($start_date) ? $start_date : '' ?>";
-        const endDate = "<?= isset($end_date) ? $end_date : '' ?>";
-        const status = "<?= isset($selected_status) ? $selected_status : '' ?>";
-        
-        const printUrl = `<?= base_url('admin/laporan/cetak') ?>?start_date=${startDate}&end_date=${endDate}&status=${status}`;
-        
-        // Tampilkan dan aktifkan tombol cetak
-        const cetakBtn = $('#cetakBtn');
-        cetakBtn.attr('href', printUrl);
-        cetakBtn.show();
-    <?php endif; ?>
-});
-</script>

@@ -55,6 +55,7 @@ $route['siswa'] = 'siswa/index';
 
 $route['admin/laporan'] = 'laporan';
 $route['admin/laporan/generate'] = 'laporan/generate';
+$route['admin/laporan/cetak'] = 'laporan/cetak';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

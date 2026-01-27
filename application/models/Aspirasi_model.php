@@ -107,20 +107,27 @@ class Aspirasi_model extends CI_Model
     /**
      * Get aspirasi by date range and status for reports
      */
-    public function get_by_date_and_status($start_date, $end_date, $status)
+    public function get_by_date_and_status($start_date = '', $end_date = '', $status = '')
     {
         $this->db->select('aspirasi.*, siswa.kelas, kategori.nama_kategori');
         $this->db->join('siswa', 'aspirasi.nis = siswa.nis', 'left');
         $this->db->join('kategori', 'aspirasi.id_kategori = kategori.id_kategori', 'left');
-        
-        $this->db->where('aspirasi.tanggal >=', $start_date);
-        $this->db->where('aspirasi.tanggal <=', $end_date . ' 23:59:59');
 
+        // Filter by date range (optional)
+        if (!empty($start_date)) {
+            $this->db->where('aspirasi.tanggal >=', $start_date);
+        }
+
+        if (!empty($end_date)) {
+            $this->db->where('aspirasi.tanggal <=', $end_date . ' 23:59:59');
+        }
+
+        // Filter by status (optional)
         if (!empty($status)) {
             $this->db->where('aspirasi.status', $status);
         }
-        
-        $this->db->order_by('aspirasi.tanggal', 'ASC');
+
+        $this->db->order_by('aspirasi.tanggal', 'DESC');
 
         return $this->db->get(self::TABLE)->result();
     }

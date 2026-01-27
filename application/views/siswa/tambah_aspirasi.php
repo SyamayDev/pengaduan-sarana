@@ -53,9 +53,9 @@
                         </div>
                         <div class="form-text mt-1">Lampirkan gambar jika diperlukan untuk memperjelas. Maks 5MB.</div>
                         
-                        <div id="imagePreview" class="mt-3" style="display: none;">
-                            <p class="form-text">Pratinjau Gambar:</p>
-                            <img id="previewImg" src="" alt="Preview" class="img-fluid rounded" style="max-height: 250px;">
+                        <div class="mt-3" id="imagePreview">
+                            <img id="previewImg" src="#" alt="Preview Gambar" class="img-fluid" width="100px" height="auto">
+                            <p id="fileName" class="mt-2"></p>
                         </div>
                     </div>
 
