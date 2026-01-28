@@ -3,7 +3,7 @@
     <div class="col-12" data-aos="fade-up">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h4 mb-0">
-                <i class="fas fa-file-alt me-2"></i> Beranda
+                <i class="fas fa-home me-2"></i> Beranda
             </h2>
             <div>
                 <span class="badge bg-light text-dark me-2">

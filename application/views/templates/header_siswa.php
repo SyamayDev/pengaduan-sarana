@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($title) ? $title : 'Aspirasi Siswa' ?> - Pengaduan Sarana</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
+    <!-- Font Awesome Icons (OFFLINE) -->
+    <link rel="stylesheet" href="<?= base_url('assets/fontawesome/css/all.min.css') ?>">
     <style>
         body, html {
             height: 100%;
@@ -104,16 +105,16 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link <?= ($this->uri->segment(1) == 'siswa' && empty($this->uri->segment(2))) ? 'active' : '' ?>" href="<?= base_url('siswa') ?>">Semua Aspirasi</a>
+                            <a class="nav-link <?= ($this->uri->segment(1) == 'siswa' && empty($this->uri->segment(2))) ? 'active' : '' ?>" href="<?= base_url('siswa') ?>"><i class="fas fa-home"></i> Semua Aspirasi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($this->uri->segment(2) == 'my_aspirasi') ? 'active' : '' ?>" href="<?= base_url('siswa/my_aspirasi') ?>">Aspirasiku</a>
+                            <a class="nav-link <?= ($this->uri->segment(2) == 'my_aspirasi') ? 'active' : '' ?>" href="<?= base_url('siswa/my_aspirasi') ?>"><i class="fas fa-file-alt"></i> Aspirasiku</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link <?= ($this->uri->segment(2) == 'tambah') ? 'active' : '' ?>" href="<?= base_url('siswa/tambah') ?>">Buat Aspirasi</a>
+                            <a class="nav-link <?= ($this->uri->segment(2) == 'tambah') ? 'active' : '' ?>" href="<?= base_url('siswa/tambah') ?>"><i class="fas fa-plus-circle"></i> Buat Aspirasi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('siswa/logout') ?>">Logout</a>
+                            <a class="nav-link" href="<?= base_url('siswa/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         </li>
                     </ul>
                 </div>

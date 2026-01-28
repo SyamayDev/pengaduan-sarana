@@ -20,22 +20,32 @@
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="<?= base_url('assets/js/jquery-3.6.0.min.js') ?>"></script>
+
 <!-- Bootstrap 4 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables & Plugins -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
-<!-- AdminLTE App -->
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+
+<!-- DataTables -->
+<script src="<?= base_url('assets/js/jquery.dataTables.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/dataTables.bootstrap4.min.js') ?>"></script>
+
+<!-- DataTables Buttons -->
+<script src="<?= base_url('assets/js/dataTables.buttons.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/buttons.bootstrap4.min.js') ?>"></script>
+
+<!-- Export Dependencies -->
+<script src="<?= base_url('assets/js/jszip.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/pdfmake.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/vfs_fonts.js') ?>"></script>
+
+<!-- Buttons -->
+<script src="<?= base_url('assets/js/buttons.html5.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/buttons.print.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/buttons.colVis.min.js') ?>"></script>
+
+<!-- AdminLTE -->
+<script src="<?= base_url('assets/js/adminlte.min.js') ?>"></script>
+
 
 <?php if (isset($pending_aspirasi_count) && $pending_aspirasi_count > 0): ?>
   <script>

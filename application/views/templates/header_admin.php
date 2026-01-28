@@ -8,13 +8,16 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <!-- Font Awesome Icons (OFFLINE) -->
+  <link rel="stylesheet" href="<?= base_url('assets/fontawesome/css/all.min.css') ?>">
+
+  <!-- AdminLTE Theme style (OFFLINE) -->
+  <link rel="stylesheet" href="<?= base_url('assets/css/adminlte.min.css') ?>">
+
   <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/buttons.bootstrap4.min.css') ?>">
+
 
   <style>
 /* ===== DataTables Styling ===== */
