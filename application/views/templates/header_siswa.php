@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
     <!-- Font Awesome Icons (OFFLINE) -->
     <link rel="stylesheet" href="<?= base_url('assets/fontawesome/css/all.min.css') ?>">
+    <!-- Aos -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/aos.css') ?>">
     <style>
         body, html {
             height: 100%;
@@ -94,13 +96,23 @@
             border-color: #157347;
         }
 
+        .preview-img {
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .preview-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+        }
+
+
     </style>
 </head>
 <body>
 
     <header>
         <!-- Desktop Navigation -->
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm navbar-desktop">
+        <nav class="navbar navbar-expand-md navbar-light bg-gradient shadow-sm navbar-desktop">
             <div class="container">
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

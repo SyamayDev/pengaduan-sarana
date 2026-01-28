@@ -9,9 +9,6 @@
                 <span class="badge bg-light text-dark me-2">
                     <i class="fas fa-user me-1"></i> <?= htmlspecialchars($this->session->userdata('siswa')->nis) ?>
                 </span>
-                <a href="<?= base_url('siswa/tambah') ?>" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus me-1"></i> Tambah
-                </a>
             </div>
         </div>
     </div>
@@ -19,28 +16,28 @@
 
 <?php if (!empty($aspirasi)): ?>
     <!-- Tabs untuk Filter Status -->
-    <ul class="nav nav-tabs mb-4" id="statusTabs" role="tablist" data-aos="fade-right">
+    <ul class="nav nav-tabs mb-4" id="statusTabs" role="tablist" data-aos="fade-up">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="semua-tab" data-bs-toggle="tab" data-bs-target="#semua" type="button" role="tab">
+            <button class="nav-link active" id="semua-tab" data-toggle="tab" data-target="#semua" type="button" role="tab">
                 Semua <span class="badge bg-primary ms-1"><?= count($aspirasi) ?></span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="menunggu-tab" data-bs-toggle="tab" data-bs-target="#menunggu" type="button" role="tab">
+            <button class="nav-link" id="menunggu-tab" data-toggle="tab" data-target="#menunggu" type="button" role="tab">
                 Menunggu <span class="badge bg-warning ms-1"><?= count(array_filter($aspirasi, function ($a) {
                                                                     return $a->status == 'Menunggu';
                                                                 })) ?></span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="proses-tab" data-bs-toggle="tab" data-bs-target="#proses" type="button" role="tab">
+            <button class="nav-link" id="proses-tab" data-toggle="tab" data-target="#proses" type="button" role="tab">
                 Proses <span class="badge bg-info ms-1"><?= count(array_filter($aspirasi, function ($a) {
                                                             return $a->status == 'Proses';
                                                         })) ?></span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="selesai-tab" data-bs-toggle="tab" data-bs-target="#selesai" type="button" role="tab">
+            <button class="nav-link" id="selesai-tab" data-toggle="tab" data-target="#selesai" type="button" role="tab">
                 Selesai <span class="badge bg-success ms-1"><?= count(array_filter($aspirasi, function ($a) {
                                                                 return $a->status == 'Selesai';
                                                             })) ?></span>
@@ -114,6 +111,20 @@
                                 <?php else: ?>
                                     <div class="alert alert-warning py-2 px-3" role="alert">
                                         <small><i class="fas fa-hourglass-half me-1"></i> Menunggu feedback dari admin...</small>
+                                    </div>
+                                <?php endif; ?>
+
+                                <!-- Tombol Edit dan Hapus (Hanya untuk pemilik aspirasi) -->
+                                <?php if ($this->session->userdata('siswa') && $a->nis == $this->session->userdata('siswa')->nis && $a->status == 'Menunggu'): ?>
+                                    <div class="mt-3 d-flex justify-content-end">
+                                        <a href="<?= base_url('siswa/edit_aspirasi/' . $a->id_aspirasi) ?>" class="btn btn-sm btn-outline-primary me-2">
+                                            <i class="fas fa-edit me-1"></i> Edit
+                                        </a>
+                                        <a href="<?= base_url('siswa/hapus_aspirasi/' . $a->id_aspirasi) ?>" 
+                                           class="btn btn-sm btn-outline-danger" 
+                                           onclick="return confirm('Apakah Anda yakin ingin menghapus aspirasi ini?')">
+                                            <i class="fas fa-trash me-1"></i> Hapus
+                                        </a>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -371,6 +382,7 @@
         </div>
     </div>
 <?php endif; ?>
+
 
 <style>
     .badge-menunggu {

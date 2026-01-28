@@ -213,6 +213,127 @@ class Siswa extends CI_Controller
         redirect('siswa/my_aspirasi');
     }
 
+    public function edit_aspirasi($id)
+    {
+        $this->_check_login();
+
+        $data['aspirasi'] = $this->aspirasi_model->get_by_id($id);
+        $nis_session = $this->session->userdata('siswa')->nis;
+
+        if (!$data['aspirasi'] || $data['aspirasi']->nis !== $nis_session) {
+            $this->session->set_flashdata('error', 'Aspirasi tidak ditemukan atau Anda tidak memiliki hak akses.');
+            redirect('siswa/my_aspirasi');
+        }
+
+        if ($data['aspirasi']->status !== 'Menunggu') {
+            $this->session->set_flashdata('error', 'Aspirasi yang sudah diproses atau selesai tidak dapat diubah.');
+            redirect('siswa/my_aspirasi');
+        }
+
+        $data['kategori'] = $this->kategori_model->get_all();
+        $data['title'] = 'Edit Aspirasi';
+
+        $this->load->view('templates/header_siswa', $data);
+        $this->load->view('siswa/edit_aspirasi', $data);
+        $this->load->view('templates/footer_siswa');
+    }
+
+    public function update_aspirasi()
+    {
+        $this->_check_login();
+
+        if ($this->input->method() !== 'post') {
+            redirect('siswa/my_aspirasi');
+        }
+
+        $id_aspirasi = $this->input->post('id_aspirasi');
+        $aspirasi = $this->aspirasi_model->get_by_id($id_aspirasi);
+        $nis_session = $this->session->userdata('siswa')->nis;
+
+        if (!$aspirasi || $aspirasi->nis !== $nis_session) {
+            $this->session->set_flashdata('error', 'Aspirasi tidak ditemukan atau Anda tidak memiliki hak akses.');
+            redirect('siswa/my_aspirasi');
+        }
+
+        if ($aspirasi->status !== 'Menunggu') {
+            $this->session->set_flashdata('error', 'Aspirasi yang sudah diproses atau selesai tidak dapat diubah.');
+            redirect('siswa/my_aspirasi');
+        }
+
+        $kategori = $this->input->post('kategori', TRUE);
+        $lokasi = $this->input->post('lokasi', TRUE);
+        $keterangan = $this->input->post('keterangan', TRUE);
+
+        if (empty($kategori) || empty($lokasi) || empty($keterangan)) {
+            $this->session->set_flashdata('error', 'Kategori, Lokasi, dan Keterangan harus diisi!');
+            redirect('siswa/edit_aspirasi/' . $id_aspirasi);
+        }
+
+        $kat = $this->kategori_model->get_by_id($kategori);
+        if (!$kat) {
+            $this->session->set_flashdata('error', 'Kategori tidak valid!');
+            redirect('siswa/edit_aspirasi/' . $id_aspirasi);
+        }
+
+        $gambar = $aspirasi->gambar;
+        if (!empty($_FILES['gambar']['name'])) {
+            $config['upload_path'] = './uploads/aspirasi/';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|webp';
+            $config['max_size'] = 5048; // 5MB
+            $config['encrypt_name'] = TRUE;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('gambar')) {
+                if ($gambar && file_exists('./uploads/aspirasi/' . $gambar)) {
+                    unlink('./uploads/aspirasi/' . $gambar);
+                }
+                $gambar = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('error', 'Gagal upload gambar: ' . $this->upload->display_errors());
+                redirect('siswa/edit_aspirasi/' . $id_aspirasi);
+            }
+        }
+
+        $data_update = [
+            'id_kategori' => $kategori,
+            'lokasi' => $lokasi,
+            'keterangan' => $keterangan,
+            'gambar' => $gambar,
+        ];
+
+        $this->aspirasi_model->update($id_aspirasi, $data_update);
+        $this->session->set_flashdata('success', 'Aspirasi berhasil diperbarui.');
+        redirect('siswa/my_aspirasi');
+    }
+
+    public function hapus_aspirasi($id)
+    {
+        $this->_check_login();
+
+        $aspirasi = $this->aspirasi_model->get_by_id($id);
+        $nis_session = $this->session->userdata('siswa')->nis;
+
+        if (!$aspirasi || $aspirasi->nis !== $nis_session) {
+            $this->session->set_flashdata('error', 'Aspirasi tidak ditemukan atau Anda tidak memiliki hak akses.');
+            redirect('siswa/my_aspirasi');
+        }
+
+        if ($aspirasi->status !== 'Menunggu') {
+            $this->session->set_flashdata('error', 'Aspirasi yang sudah diproses atau selesai tidak dapat dihapus.');
+            redirect('siswa/my_aspirasi');
+        }
+
+        // Hapus gambar terkait jika ada
+        if ($aspirasi->gambar && file_exists('./uploads/aspirasi/' . $aspirasi->gambar)) {
+            unlink('./uploads/aspirasi/' . $aspirasi->gambar);
+        }
+
+        $this->aspirasi_model->delete($id);
+        $this->session->set_flashdata('success', 'Aspirasi berhasil dihapus.');
+        redirect('siswa/my_aspirasi');
+    }
+
     // ============ HELPER METHODS ============
 
     private function _check_login()

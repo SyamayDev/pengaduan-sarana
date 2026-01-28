@@ -21,9 +21,25 @@
             <span>Logout</span>
         </a>
     </nav>
-
+    
+    <!-- jQuery -->
+    <script src="<?= base_url('assets/js/jquery-3.6.0.min.js') ?>"></script>
     <!-- Bootstrap 4 -->
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <!-- Aos -->
+    <script src="<?= base_url('assets/js/aos.js') ?>"></script>
+    <script>
+        $(document).ready(function() {
+    console.log("jQuery is working");
+    console.log("AOS is available:", typeof AOS !== 'undefined');
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 650,
+            once: true
+        });
+    }
+});
+    </script>
     
 </body>
 </html>
