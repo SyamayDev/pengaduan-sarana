@@ -203,6 +203,12 @@ table.dataTable {
             </div>
 
             <div class="dropdown-divider"></div>
+
+            <div class="text-center">
+              <a href="<?= base_url('admin/logout') ?>" class="dropdown-item">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+              </a>
+            </div>
           </div>
 
         </li>
