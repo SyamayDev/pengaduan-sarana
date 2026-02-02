@@ -136,17 +136,49 @@
 
     <main class="main-content py-2">
         <div class="container">
-         <?php if ($this->session->flashdata('success')): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?= $this->session->flashdata('success') ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
+<?php if ($this->session->flashdata('success')): ?>
+    <div 
+        class="alert alert-success alert-dismissible fade show" 
+        role="alert"
+        style="
+            border-radius: 14px;
+            padding: 14px 48px 14px 16px;
+            box-shadow: 0 6px 14px rgba(0, 128, 0, 0.15);
+            position: relative;
+            font-size: 14px;
+        "
+    >
+        <?= $this->session->flashdata('success') ?>
 
-        <?php if ($this->session->flashdata('error')): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= $this->session->flashdata('error') ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
+        <button 
+            type="button" 
+            class="close" 
+            data-dismiss="alert" 
+            aria-label="Close"
+            style="
+                position: absolute;
+                top: 50%;
+                right: 12px;
+                transform: translateY(-50%);
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                border: none;
+                background: rgba(0,0,0,0.08);
+                font-size: 18px;
+                line-height: 1;
+                opacity: 0.7;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s ease;
+            "
+            onmouseover="this.style.background='rgba(0,0,0,0.15)';this.style.opacity='1'"
+            onmouseout="this.style.background='rgba(0,0,0,0.08)';this.style.opacity='0.7'"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif; ?>
+
     <!-- Content starts here -->
