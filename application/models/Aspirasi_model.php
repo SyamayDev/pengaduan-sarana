@@ -9,18 +9,25 @@ class Aspirasi_model extends CI_Model
     /**
      * Get all aspirasi with join
      */
-    public function get_all($limit = NULL)
+    public function get_all($limit = NULL, $category_id = NULL)
     {
         $this->db->select('aspirasi.*, siswa.kelas, kategori.nama_kategori');
+        $this->db->from(self::TABLE);
         $this->db->join('siswa', 'aspirasi.nis = siswa.nis', 'left');
         $this->db->join('kategori', 'aspirasi.id_kategori = kategori.id_kategori', 'left');
+
+        // Filter by category if provided
+        if (!empty($category_id)) {
+            $this->db->where('aspirasi.id_kategori', $category_id);
+        }
+
         $this->db->order_by('aspirasi.tanggal', 'DESC');
 
         if ($limit) {
             $this->db->limit($limit);
         }
 
-        return $this->db->get(self::TABLE)->result();
+        return $this->db->get()->result();
     }
 
     /**

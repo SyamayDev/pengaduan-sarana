@@ -21,7 +21,7 @@
     title,
     message,
     type = 'info',
-    duration = 5000,
+    duration = 3000,
     actionCallback = null,
   ) {
     const notification = document.createElement('div');

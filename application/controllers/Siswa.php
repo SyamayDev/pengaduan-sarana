@@ -18,20 +18,26 @@ class Siswa extends CI_Controller
      */
     public function index()
     {
-        // Always show all aspirasi regardless of login status
+        // Ambil data filter dari URL
         $search_id = $this->input->get('search_id', TRUE);
-        $data['search_id'] = $search_id; // Pass search term back to view
+        $category_id = $this->input->get('category', TRUE);
 
+        // Kirim data filter dan kategori ke view
+        $data['search_id'] = $search_id;
+        $data['selected_category'] = $category_id;
+        $data['kategori'] = $this->kategori_model->get_all();
+
+
+        // Logika untuk mendapatkan data aspirasi
         if (!empty($search_id)) {
-            // If a search ID is provided, find that specific aspiration
             $result = $this->aspirasi_model->get_by_id($search_id);
-            $data['aspirasi'] = $result ? [$result] : []; // The view expects an array
+            $data['aspirasi'] = $result ? [$result] : [];
         } else {
-            // Otherwise, show all aspirations
-            $data['aspirasi'] = $this->aspirasi_model->get_all();
+            // Filter berdasarkan kategori jika dipilih
+            $data['aspirasi'] = $this->aspirasi_model->get_all(NULL, $category_id);
         }
 
-        // Show different view based on login status
+        // Tampilkan view yang sesuai
         if ($this->session->userdata('siswa')) {
             $data['title'] = 'Semua Aspirasi';
             $this->load->view('templates/header_siswa', $data);

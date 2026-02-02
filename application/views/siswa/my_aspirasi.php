@@ -16,7 +16,7 @@
 
 <?php if (!empty($aspirasi)): ?>
     <!-- Tabs untuk Filter Status -->
-    <ul class="nav nav-tabs mb-4" id="statusTabs" role="tablist" data-aos="fade-right">
+    <ul class="nav nav-tabs mb-4" id="statusTabs" role="tablist" data-aos="fade-up">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="semua-tab" data-toggle="tab" data-target="#semua" type="button" role="tab">
                 Semua <span class="badge bg-primary ms-1"><?= count($aspirasi) ?></span>

@@ -29,16 +29,16 @@
     <!-- Aos -->
     <script src="<?= base_url('assets/js/aos.js') ?>"></script>
     <script>
-        $(document).ready(function() {
-    console.log("jQuery is working");
-    console.log("AOS is available:", typeof AOS !== 'undefined');
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 650,
-            once: true
-        });
-    }
-});
+            $(document).ready(function() {
+        console.log("jQuery is working");
+        console.log("AOS is available:", typeof AOS !== 'undefined');
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 650,
+                once: true
+            });
+        }
+    });
     </script>
     
 </body>

@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>  
 
 <?php if (!empty($aspirasi)): ?>
     <!-- Tabs untuk Filter Status -->

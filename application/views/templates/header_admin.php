@@ -192,7 +192,7 @@ table.dataTable {
             <i class="far fa-user"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">Admin Actions</span>
+            <span class="dropdown-item dropdown-header">TRIADU Admin</span>
             <div class="dropdown-divider"></div>
 
             <!-- Time & Date -->
