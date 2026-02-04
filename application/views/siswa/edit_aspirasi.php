@@ -1,4 +1,4 @@
-<div class="container mt-4" data-aos="zoom-in-up">
+<div class="container my-5" data-aos="zoom-in-up">
     <div class="row justify-content-center">
         <div class="col-lg-9">
             <div class="card shadow-sm">

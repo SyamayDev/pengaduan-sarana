@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="nis">NIS</label>
-                        <input type="text" class="form-control" id="nis" value="<?= htmlspecialchars($siswa->nis) ?>" readonly>
+                        <input type="number" class="form-control" id="nis" value="<?= htmlspecialchars($siswa->nis) ?>" readonly>
                         <small class="form-text text-muted">NIS tidak dapat diubah.</small>
                     </div>
                     <div class="form-group">

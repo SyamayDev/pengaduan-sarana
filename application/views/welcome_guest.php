@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Datang - Pengaduan Sarana</title>
+    <link rel="icon" type="image/png" href="<?= base_url('assets/images/logo.webp') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/fontawesome/css/all.min.css') ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/aos.css') ?>">
     <style>
-        body, html { height: 100%; margin: 0; background-color: #f8f9fa; }
+        body { margin: 0; background-color: #f8f9fa; min-height: 100vh; }
         .navbar-brand img { max-height: 40px; }
         .fab {
             position: fixed; bottom: 40px; right: 40px; width: 70px; height: 70px;
@@ -31,7 +33,7 @@
 <body>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url() ?>">
                 <img src="<?= base_url('assets/images/logo.webp') ?>" alt="Logo" class="d-inline-block align-text-top me-2">
@@ -46,9 +48,9 @@
     </nav>
 </header>
 
-<main class="py-5">
+<main class="py-2">
     <div class="container">
-        <h2 class="text-center mb-5">Daftar Aspirasi & Pengaduan</h2>
+        <h2 class="text-center mb-2">Daftar Aspirasi & Pengaduan</h2>
 
         <?php if (!empty($aspirasi)): ?>
 
@@ -172,9 +174,9 @@
                                     <i class="fas fa-plus me-2"></i> Tambah Aspirasi
                                 </a>
                             <?php else: ?>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-                                    <i class="fas fa-sign-in-alt me-2"></i> Login
-                                </button>
+                                <a href="<?= base_url('siswa/login_page') ?>" class="btn btn-primary">
+                                    <i class="fas fa-plus me-2"></i> Tambah Aspirasi
+                                </a>    
                             <?php endif; ?>
                         </div>
                     </div>

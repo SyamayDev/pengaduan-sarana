@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Siswa - Pengaduan Sarana</title>
+    <link rel="icon" type="image/png" href="<?= base_url('assets/images/logo.webp') ?>">
     <link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/aos.css') ?>" rel="stylesheet">
     <style>
@@ -87,6 +88,9 @@
                 <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Contoh: XII-RPL-1" required>
             </div>
             <button type="submit" class="btn btn-success w-100">Login</button>
+            <div class="text-center mt-3">
+                <a href="<?= base_url() ?>" class="text-white-50">Kembali ke Beranda</a>
+            </div>
         </form>
     </div>
 
